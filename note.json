@@ -1,0 +1,168 @@
+{
+  "paragraphs": [
+    {
+      "text": "%snappydata.spark\nval snappy \u003d new org.apache.spark.sql.SnappySession(spark.sparkContext)\nval path \u003d s\"/home/schoure/spark-2.3.1-bin-hadoop2.7/People.json\"\n// Read a JSON file using Spark API\nval people \u003d snappy.read.json(path)\npeople.printSchema()\nsnappy.dropTable(\"people\", ifExists \u003d true)\nsnappy.createTable(tableName \u003d \"people\",provider \u003d \"column\",schema \u003d people.schema,options \u003d Map.empty[String,String],allowExisting \u003d false)\n\npeople.write.insertInto(\"people\")\nval nameAndAddress \u003d snappy.sql(\"SELECT \" +\n    \"age \" +\n    \"FROM people\")\n\nnameAndAddress.toJSON.show()\n",
+      "user": "anonymous",
+      "dateUpdated": "Aug 18, 2018 2:37:44 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "text",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/text"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nsnappy: org.apache.spark.sql.SnappySession \u003d org.apache.spark.sql.SnappySession@5159525d\n\npath: String \u003d /home/schoure/spark-2.3.1-bin-hadoop2.7/People.json\n\npeople: org.apache.spark.sql.DataFrame \u003d [age: bigint, name: string]\nroot\n |-- age: long (nullable \u003d true)\n |-- name: string (nullable \u003d true)\n\n\nres14: org.apache.spark.sql.DataFrame \u003d [AGE: bigint, NAME: string]\n\nnameAndAddress: org.apache.spark.sql.CachedDataFrame \u003d [AGE: bigint]\n+----------+\n|     VALUE|\n+----------+\n|        {}|\n|{\"AGE\":30}|\n|{\"AGE\":19}|\n+----------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1534571978827_-2000265492",
+      "id": "20180818-112938_390233364",
+      "dateCreated": "Aug 18, 2018 11:29:38 AM",
+      "dateStarted": "Aug 18, 2018 2:37:44 PM",
+      "dateFinished": "Aug 18, 2018 2:37:49 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%snappydata.spark\nval snappy \u003d new org.apache.spark.sql.SnappySession(spark.sparkContext)\nval dataframe_mysql \u003d snappy.read.format(\"jdbc\").option(\"url\",\"jdbc:mysql://localhost:3306/mysql\").option(\"driver\",\"com.mysql.jdbc.Driver\").option(\"dbtable\", \"Persons\").option(\"user\", \"root\").option(\"password\",\"root\").load()\n    dataframe_mysql.show()",
+      "user": "anonymous",
+      "dateUpdated": "Aug 18, 2018 2:37:44 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "text",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/text",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nsnappy: org.apache.spark.sql.SnappySession \u003d org.apache.spark.sql.SnappySession@23fecb85\n\ndataframe_mysql: org.apache.spark.sql.DataFrame \u003d [PersonID: int, LastName: string ... 3 more fields]\n+--------+--------+---------+------------+-----+\n|PersonID|LastName|FirstName|     Address| City|\n+--------+--------+---------+------------+-----+\n|       1|  Choure| Sambhaji|  Magarpatta| Pune|\n|       2|    Dose|  Navlesh|    Sainagar|Akola|\n|       3|   Bhore|    Akash|Shivajinagar| Beed|\n+--------+--------+---------+------------+-----+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1534570257579_-1178504783",
+      "id": "20180818-110057_1125399438",
+      "dateCreated": "Aug 18, 2018 11:00:57 AM",
+      "dateStarted": "Aug 18, 2018 2:37:45 PM",
+      "dateFinished": "Aug 18, 2018 2:37:52 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%snappydata.spark\nval snappy \u003d new org.apache.spark.sql.SnappySession(spark.sparkContext)\nval otherdf \u003d  spark.read.format(\"org.apache.spark.sql.cassandra\").options(Map( \"table\" -\u003e \"t\", \"keyspace\" -\u003e \"excelsior\" , \"cluster\" -\u003e \"ClusterOne\")).load()\n otherdf.show()",
+      "user": "anonymous",
+      "dateUpdated": "Aug 18, 2018 2:37:44 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "text",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/text"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nsnappy: org.apache.spark.sql.SnappySession \u003d org.apache.spark.sql.SnappySession@96ba55f\n\notherdf: org.apache.spark.sql.DataFrame \u003d [k: int, other: string]\n+---+-----+\n|  k|other|\n+---+-----+\n|  1|   Hi|\n|  2|  Bye|\n+---+-----+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1534577974937_-947659329",
+      "id": "20180818-130934_1326406271",
+      "dateCreated": "Aug 18, 2018 1:09:34 PM",
+      "dateStarted": "Aug 18, 2018 2:37:45 PM",
+      "dateFinished": "Aug 18, 2018 2:37:51 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "",
+      "user": "anonymous",
+      "dateUpdated": "Aug 18, 2018 2:37:44 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "text",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/text"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1534568221129_1032333561",
+      "id": "20180818-102701_1083138095",
+      "dateCreated": "Aug 18, 2018 10:27:01 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Snappyjob",
+  "id": "2DN34U1JV",
+  "angularObjects": {
+    "2DMKRHBNV:shared_process": [],
+    "2DQP58AJZ:shared_process": [],
+    "2DMZFCWA8:shared_process": [],
+    "2DN974DZE:shared_process": [],
+    "2DQYXDCYH:shared_process": [],
+    "2DQQSB55J:shared_process": [],
+    "2DNK9N5CY:shared_process": [],
+    "2DPWYWUXW:shared_process": [],
+    "2DN42ZSB9:shared_process": [],
+    "2DN5DZPXA:shared_process": [],
+    "2DQBJT9XE:shared_process": [],
+    "2DMGHJEHW:shared_process": [],
+    "2DNK9UR3H:shared_process": [],
+    "2DQY3M7F1:shared_process": [],
+    "2DP2956K1:shared_process": [],
+    "2DQ2ZYB2P:shared_process": [],
+    "2DR4HZ98C:shared_process": [],
+    "2DQBB8XNB:shared_process": [],
+    "2DNP9Z539:existing_process": [],
+    "2DMUNW6GU:shared_process": [],
+    "2DMCVXPNB:shared_process": []
+  },
+  "config": {
+    "looknfeel": "simple",
+    "personalizedMode": "false"
+  },
+  "info": {}
+}
